@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% from 'card.html' import recipeCard with context %}
+{% block page %}
+    <h2>{{ chef.displayname }}</h2>
+    <h5>{{ chef.username }}</h5>
+
+    <br>
+{% for recipe in recipies %}
+{{ recipeCard(recipe) }}
+{% endfor %}
+{% endblock %}

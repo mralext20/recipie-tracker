@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block page %}
+<form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=32) }}<br>
+            {% for error in form.title.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.ingredients.label }}<br>
+            {{ form.ingredients(size=32) }}<br>
+            {% for error in form.ingredients.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.instructions.label }}<br>
+            {{ form.instructions(size=32) }}<br>
+            {% for error in form.instructions.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+    <p> {{ form.submit_button() }} </p>
+</form>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html class="gr__localhost">
+<head>
+    <title>Recipe Tracker {{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/bootstrap.min.css">
+<script src="/static/bootstrap.min.js" ></script>
+</head>
+<body >
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="navbar-brand" href="#">Recipe Tracker</div>
+  <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/index">Index of Recipes</a>
+      </li>
+       {% if current_user.is_authenticated %}
+      <li class="nav-item">
+          <a class="nav-link" href="/submit">Submit</a>
+      </li>
+      {% endif %}
+  </ul>
+    <ul class="navbar-nav justify-content-end">
+        {% if current_user.is_authenticated %}
+            {% if current_user.admin %}
+                <li><span class="nav-item badge badge-danger">Admin</span></li>
+             {% endif %}
+            <li><a class="nav-link" href="/chefs/{{ current_user.id }}">{{ current_user.displayname }}</a></li>
+        <li><a class="nav-link" href="/logout">Logout</a></li>
+        {% else %}
+        <li><a class="nav-link" href="/register">Register</a></li>
+        <li><a class="nav-link" href="/login">Login</a></li>
+        {% endif %}
+    </ul>
+
+  </div>
+</nav>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-primary" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% block page %}{% endblock %}
+</body>
+</html>

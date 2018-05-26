@@ -1,0 +1,5 @@
+{% extends "layout.html" %}
+{% from "card.html" import recipeCard with context %}
+{% block page %}
+{{ recipeCard(recipe) }}
+{% endblock %}

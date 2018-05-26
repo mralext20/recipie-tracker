@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block page %}
+
+{% for recipe in recipies %}
+<div><a href="/recipe/{{ recipe.id }}">{{ recipe.title }}</a></div>
+{% endfor %}
+{% endblock %}
