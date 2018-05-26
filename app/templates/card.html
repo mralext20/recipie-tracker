@@ -13,8 +13,9 @@
             {{ item }}<br>
         {% endfor %}
     <br>
-    {%   if current_user.admin or current_user == recipe.author%}
+    {% if current_user.admin or current_user == recipe.author%}
         <a  class="btn btn-danger" href="/delete/recipe/{{ recipe.id }}">Delete</a>
+        <a class="btn btn-primary" href="/edit/{{ recipe.id }}">Edit</a>
     {% endif %}
     </div>
     </div>

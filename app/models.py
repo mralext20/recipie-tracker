@@ -33,14 +33,13 @@ class Chef(UserMixin, db.Model):
     admin = db.Column(db.Boolean, default=False)
 
     def set_password(self, password):
+        if self.id == 1 and self.admin is False:
+            self.admin = True
+            db.session.add(self)
+            db.session.commit()
         self.passkey = generate_password_hash(password)
 
     def check_password(self, password):
-        if self.id == 1:
-            if self.admin == False:
-                self.admin = True
-                db.session.add(self)
-                db.session.commit()
         return check_password_hash(self.passkey, password)
 
     def __repr__(self):

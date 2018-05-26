@@ -4,21 +4,21 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.title.label }}<br>
-            {{ form.title(size=32) }}<br>
+            {{ form.title() }}<br>
             {% for error in form.title.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.ingredients.label }}<br>
-            {{ form.ingredients(size=32) }}<br>
+            {{ form.ingredients() }}<br>
             {% for error in form.ingredients.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
             {{ form.instructions.label }}<br>
-            {{ form.instructions(size=32) }}<br>
+            {{ form.instructions() }}<br>
             {% for error in form.instructions.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

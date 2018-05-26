@@ -15,8 +15,8 @@ def index():
         return render_template('index.html', title="Index", recipies=recipes)
 
 
-@login_required
 @app.route('/submit', methods=["GET","POST"])
+@login_required
 def submit():
     """submit a recipe"""
     form = RecipeForm()
@@ -41,8 +41,9 @@ def login():
         user = Chef.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            return redirect(url_for('login'))
+
         login_user(user, remember=form.remember_me.data)
+        return redirect('/')
     return render_template('login.html', title='Sign In', form=form)
 
 
@@ -63,7 +64,8 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect('/')
     return render_template('register.html', title='Register', form=form)
 
 
@@ -117,3 +119,27 @@ def delete_recipe(rid):
     else:
         flash('you arent allowed to access this')
     return redirect('/')
+
+@app.route('/edit/<int:rid>', methods=["GET", "POST"])
+def edit_recipe(rid):
+    target = Recipe.query.filter_by(id=rid).one_or_none()
+
+    if (current_user.admin or target.author == current_user) or target is None:
+        form = RecipeForm()
+        if form.validate_on_submit():
+            target.title = form.title.data
+            target.instructions = form.instructions.data
+            target.ingredients = form.ingredients.data
+            db.session.add(target)
+            db.session.commit()
+            flash(f'successfully edited {target.title}')
+            return redirect(f'/recipe/{rid}')
+
+    else:
+        flash('you do not have permission to edit this recipe')
+        redirect('/')
+    form = RecipeForm(title=target.title,
+                      ingredients=target.ingredients,
+                      instructions=target.instructions)
+    return render_template('submit.html', title=f'Editing {target.title}', form=form)
+

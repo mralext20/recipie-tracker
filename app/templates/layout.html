@@ -4,7 +4,6 @@
     <title>Recipe Tracker {{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/bootstrap.min.css">
-<script src="/static/bootstrap.min.js" ></script>
 </head>
 <body >
 
@@ -28,7 +27,7 @@
             {% if current_user.admin %}
                 <li><span class="nav-item badge badge-danger">Admin</span></li>
              {% endif %}
-            <li><a class="nav-link" href="/chefs/{{ current_user.id }}">{{ current_user.displayname }}</a></li>
+            <li><a class="nav-link" href="/chef/{{ current_user.id }}">{{ current_user.displayname }}</a></li>
         <li><a class="nav-link" href="/logout">Logout</a></li>
         {% else %}
         <li><a class="nav-link" href="/register">Register</a></li>
