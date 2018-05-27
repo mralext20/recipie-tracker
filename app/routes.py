@@ -88,7 +88,7 @@ def chef(uid):
     return render_template('chef.html', title=f"Chef {target.displayname}",chef=target, recipies=recipies)
 
 
-@app.route('/delete/chef/<int:uid>')
+@app.route('/delete/chef/<int:uid>', methods=["POST"])
 def delete_chef(uid):
     target = Chef.query.filter_by(id=uid).one_or_none()
     if target is None:
@@ -120,6 +120,7 @@ def delete_recipe(rid):
         flash('you arent allowed to access this')
     return redirect('/')
 
+
 @app.route('/edit/<int:rid>', methods=["GET", "POST"])
 def edit_recipe(rid):
     target = Recipe.query.filter_by(id=rid).one_or_none()
@@ -143,3 +144,34 @@ def edit_recipe(rid):
                       instructions=target.instructions)
     return render_template('submit.html', title=f'Editing {target.title}', form=form)
 
+
+@app.route('/chef/<int:uid>/make_admin', methods=["POST"])
+def make_admin(uid):
+    target = Chef.query.filter_by(id=uid).one_or_none()
+    if target is None:
+        flash('That user does not exist!')
+        return redirect('/')
+    if current_user.admin:
+        target.admin = True
+        db.session.add(target)
+        db.session.commit()
+        flash(f'made {target.displayname} an Admin!')
+    else:
+        flash("you are not allowed to make people admins")
+    return redirect(f'/chef/{uid}')
+
+
+@app.route('/chef/<int:uid>/take_admin', methods=["POST"])
+def take_admin(uid):
+    target = Chef.query.filter_by(id=uid).one_or_none()
+    if target is None:
+        flash('That user does not exist!')
+        return redirect('/')
+    if current_user.admin:
+        target.admin = False
+        db.session.add(target)
+        db.session.commit()
+        flash(f'Took admin from {target.displayname}')
+    else:
+        flash("you are not allowed to take admin from people")
+    return redirect(f'/chef/{uid}')

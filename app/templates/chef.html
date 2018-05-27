@@ -3,7 +3,26 @@
 {% block page %}
     <h2>{{ chef.displayname }}</h2>
     <h5>{{ chef.username }}</h5>
-
+    {% if current_user == chef or current_user.admin %}
+        <form action="/chef/{{ chef.id }}/edit" method="get">
+        <button class="btn btn-primary">Edit Chef</button>
+        </form>
+        <br>
+        <form action="/delete/chef/{{ chef.id }}" method="post">
+        <button class="btn btn-danger" type="submit">Delete Chef</button>
+        </form>
+    {% if current_user.admin and chef != current_user %}
+    <br>
+        {% if chef.admin %}
+    <form action="/chef/{{ chef.id }}/take_admin" method="post">
+        <button class="btn btn-danger" type="submit">Take Admin</button>
+            {% else %}
+    <form action="/chef/{{ chef.id }}/make_admin" method="post">
+        <button class="btn btn-warning" type="submit">Make Admin</button>
+    {% endif %}
+    </form>
+    {% endif %}
+    {% endif %}
     <br>
 {% for recipe in recipies %}
 {{ recipeCard(recipe) }}

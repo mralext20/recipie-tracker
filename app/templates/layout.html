@@ -1,11 +1,15 @@
 <!DOCTYPE HTML>
-<html class="gr__localhost">
+<html>
 <head>
-    <title>Recipe Tracker {{ title }}</title>
+    {% if title %}
+    <title>Recipe Tracker - {{ title }}</title>
+    {% else %}
+    <title>Recipe Tracker</title>
+    {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/bootstrap.min.css">
 </head>
-<body >
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="navbar-brand" href="#">Recipe Tracker</div>
@@ -15,13 +19,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/index">Index of Recipes</a>
-      </li>
-       {% if current_user.is_authenticated %}
-      <li class="nav-item">
+      </li><li class="nav-item">
           <a class="nav-link" href="/submit">Submit</a>
-      </li>
-      {% endif %}
-  </ul>
+      </li></ul>
     <ul class="navbar-nav justify-content-end">
         {% if current_user.is_authenticated %}
             {% if current_user.admin %}

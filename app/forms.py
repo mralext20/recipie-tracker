@@ -19,8 +19,7 @@ class SignupForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit_button = SubmitField('Sign Up')
 
-    @staticmethod
-    def validate_username(username):
+    def validate_username(self, username):
         user = Chef.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Please use a different username.')
