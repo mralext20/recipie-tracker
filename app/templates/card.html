@@ -4,17 +4,19 @@
         <a class="card-title" href="/recipe/{{ recipe.id }}"><h2>{{ recipe.title }}</h2></a>
         <br>
         <h5>contributed by <a href="/chef/{{ recipe.author_id }}">{{ recipe.author.displayname }}</a></h5>
-        <br>
+        <br><<br>
+        <h3>Ingredients</h3>
         {% for item in recipe.list_ingredients %}
             {{ item }}<br>
         {% endfor %}
-    <br>
+    <br><br>
+    <h3>Instructions</h3>
     {% for item in recipe.list_instructions %}
             {{ item }}<br>
         {% endfor %}
     <br>
     {% if current_user.admin or current_user == recipe.author%}
-        <a  class="btn btn-danger" href="/delete/recipe/{{ recipe.id }}">Delete</a>
+        <a class="btn btn-danger" href="/delete/recipe/{{ recipe.id }}">Delete</a>
         <a class="btn btn-primary" href="/edit/{{ recipe.id }}">Edit</a>
     {% endif %}
     </div>
