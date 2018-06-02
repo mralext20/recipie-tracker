@@ -4,7 +4,7 @@
         <a class="card-title" href="/recipe/{{ recipe.id }}"><h2>{{ recipe.title }}</h2></a>
         <br>
         <h5>contributed by <a href="/chef/{{ recipe.author_id }}">{{ recipe.author.displayname }}</a></h5>
-        <br><<br>
+        <br><br>
         <h3>Ingredients</h3>
         {% for item in recipe.list_ingredients %}
             {{ item }}<br>
