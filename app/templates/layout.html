@@ -8,34 +8,46 @@
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/bootstrap.min.css">
+    <script src="/static/jquery-3.3.1.min.js"></script>
+    <script src="/static/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-light sticky-top bg-light">
   <div class="navbar-brand" href="#">Recipe Tracker</div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+<div class="navbar-collapse collapse justify-content-end" id="navbarContent">
   <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/index">Index of Recipes</a>
-      </li><li class="nav-item">
+      </li>
+          {% if current_user.is_authenticated %}
+    <li class="nav-item">
           <a class="nav-link" href="/submit">Submit</a>
-      </li></ul>
-    <ul class="navbar-nav justify-content-end">
-        {% if current_user.is_authenticated %}
-            {% if current_user.admin %}
-                <li><span class="nav-item badge badge-danger">Admin</span></li>
-             {% endif %}
-            <li><a class="nav-link" href="/chef/{{ current_user.id }}">{{ current_user.displayname }}</a></li>
+    </li>
+              {% endif %}
+              </ul>
+
+    <ul class="navbar-nav">
+    {% if current_user.is_authenticated %}
+          {% if current_user.admin %}
+                <li><a class="nav-link" href="/chef/{{ current_user.id }}"><span class="badge badge-danger">Admin</span> {{ current_user.displayname }}</a></li>
+              {% else %}
+              <li><a class="nav-link" href="/chef/{{ current_user.id }}">{{ current_user.displayname }}</a></li>
+          {% endif %}
         <li><a class="nav-link" href="/logout">Logout</a></li>
         {% else %}
+     <ul class="navbar-nav">
         <li><a class="nav-link" href="/register">Register</a></li>
         <li><a class="nav-link" href="/login">Login</a></li>
-        {% endif %}
     </ul>
-
-  </div>
+    {% endif %}
+   </div>
 </nav>
 
 {% with messages = get_flashed_messages() %}

@@ -10,6 +10,11 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit_button = SubmitField('Login', validators=[DataRequired()])
 
+    def validate_username(self, username):
+        user = Chef.query.filter_by(username=username.data).one_or_none()
+        if user is None:
+            raise ValidationError('That user does not exist!')
+
 
 class SignupForm(FlaskForm):
     username = StringField('User Name', validators=[DataRequired()])
@@ -20,7 +25,7 @@ class SignupForm(FlaskForm):
     submit_button = SubmitField('Sign Up')
 
     def validate_username(self, username):
-        user = Chef.query.filter_by(username=username.data).first()
+        user = Chef.query.filter_by(username=username.data).one_or_none()
         if user is not None:
             raise ValidationError('Please use a different username.')
 
