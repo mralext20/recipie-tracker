@@ -1,20 +1,26 @@
 {% macro recipeCard(recipe) %}
-    <div class="card" style="width: 20rem;">
+    <div class="card">
     <div class="card-body">
         <a class="card-title" href="/recipe/{{ recipe.id }}"><h2>{{ recipe.title }}</h2></a>
         <br>
         <h5>contributed by <a href="/chef/{{ recipe.author_id }}">{{ recipe.author.displayname }}</a></h5>
         <br><br>
+        <div class="container">
+        <div class="row">
+        <div class="col-md-4">
         <h3>Ingredients</h3>
         {% for item in recipe.list_ingredients %}
             {{ item }}<br>
         {% endfor %}
-    <br><br>
+        </div>
+        <div class="col-md-8">
     <h3>Instructions</h3>
     {% for item in recipe.list_instructions %}
             {{ item }}<br>
         {% endfor %}
-    <br>
+        </div>
+        </div>
+        </div>
     {% if current_user.admin or current_user == recipe.author%}
         <a class="btn btn-danger" href="/delete/recipe/{{ recipe.id }}">Delete</a>
         <a class="btn btn-primary" href="/edit/{{ recipe.id }}">Edit</a>

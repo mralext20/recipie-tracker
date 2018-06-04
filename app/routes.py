@@ -128,6 +128,7 @@ def edit_recipe(rid):
 
     if (current_user.admin or target.author == current_user) or target is None:
         form = RecipeForm()
+        form.submit_button.label = f"Edit {target.title}"
         if form.validate_on_submit():
             target.title = form.title.data
             target.instructions = form.instructions.data
