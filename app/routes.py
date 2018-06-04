@@ -8,11 +8,12 @@ from flask_login import login_user, logout_user, current_user, login_required
 @app.route('/')
 @app.route('/index')
 def index():
-    recipes = Recipe.query.all()  # TODO: sort in query instead of afterwards (efficiency)
-    recipes.sort(key=lambda x: x.title)  # sort recipes
+    recipes = Recipe.query.all()
     if request.path == "/":
+        recipes = recipes[::-1]
         return render_template('home.html', recipies=recipes)
     else:
+        recipes.sort(key=lambda x: x.title)  # sort recipes
         return render_template('index.html', title="Index", recipies=recipes)
 
 
